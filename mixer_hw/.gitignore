@@ -1,0 +1,12 @@
+/build/
+/build2/
+vivado*.jou
+vivado*.log
+
+/bd/*
+!/bd/design_1.bd
+!/bd/hdl/
+/.vscode/
+/_ide/
+
+doc/*.bkp

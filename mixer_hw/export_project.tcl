@@ -1,0 +1,1 @@
+write_project_tcl -all_properties -no_copy_sources -use_bd_files -force import_project_native.tcl

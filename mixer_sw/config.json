@@ -1,0 +1,79 @@
+{
+ "platform": {
+  "os": "standalone",
+  "cpu": "ps7_cortexa9_0",
+  "domain_config": {
+   "zynq_fsbl": [
+    {
+     "type": "lib",
+     "name": "xiltimer",
+     "param": "XILTIMER_sleep_timer",
+     "value": "ps7_scutimer_0"
+    }
+   ]
+  }
+ },
+ "mixer": {
+  "files": [
+   "btn_sw.c",
+   "dbg.c",
+   "i2c.c",
+   "intr.c",
+   "led.c",
+   "log.c",
+   "main.c",
+   "mixer.c",
+   "note_gen.c",
+   "sine_table.c",
+   "ssm2603.c",
+   "timer.c",
+   "btn_sw.h",
+   "buffer.h",
+   "dbg.h",
+   "i2c.h",
+   "intr.h",
+   "led.h",
+   "log.h",
+   "mixer.h",
+   "note_gen.h",
+   "sine_table.h",
+   "ssm2603.h",
+   "timer.h"
+  ],
+  "user_config": [
+   {
+    "name": "USER_COMPILE_DEFINITIONS",
+    "value": [
+     "XDEBUG_WARNING",
+     "NDEBUG",
+     "DBG_ASSERT_CONF",
+     "NAPP_PB_REC_SYNC_DISABLE"
+    ]
+   },
+   {
+    "name": "USER_COMPILE_WARNINGS_ALL",
+    "value": "-Wall"
+   },
+   {
+    "name": "USER_COMPILE_WARNINGS_EXTRA",
+    "value": "-Wextra"
+   },
+   {
+    "name": "USER_COMPILE_WARNINGS_AS_ERRORS",
+    "value": "-Werror"
+   },
+   {
+    "name": "USER_COMPILE_OPTIMIZATION_LEVEL",
+    "value": "-O3"
+   },
+   {
+    "name": "USER_COMPILE_DEBUG_LEVEL",
+    "value": "-g3"
+   },
+   {
+    "name": "USER_LINK_LIBRARIES",
+    "value": "-lm"
+   }
+  ]
+ }
+}
