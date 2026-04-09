@@ -133,7 +133,7 @@ Note: the build configuration is stored under [config.json](./config.json), curr
 ## Build configuration
 
 The following C preprocessor defines control the compilation outcome:
-- __DEBUG__ - when __DEBUG__ is defined and __NDEBUG__ is not defined the __LOG_LEVEL_DEBUG__ logging level will be enabled across all the application modules, see [src/log.h](src/log.h), also see [](./doc/DESIGN.md#logging)
+- __DEBUG__ - when __DEBUG__ is defined and __NDEBUG__ is not defined the __LOG_LEVEL_DEBUG__ logging level will be enabled across all the application modules, see [src/log.h](src/log.h), also see [logging](./doc/DESIGN.md#logging)
 - __DBG_ASSERT_CONF__ - when defined the __DBG_ASSERT__ macro (see [src/dbg.h](src/dbg.h)) is defined, which causes the application to emit a message over UART and hang in case of assertion failures
 - __APP_PB_REC_SYNC_DISABLE__ - when user stops the recording the recorded samples are transferred to the playback buffers, when enabling this configuration the transferring is not done and the initial samples in the playback buffers are retained
 
@@ -151,7 +151,7 @@ The application provides the following functionality:
 - delay line input selection
 - LEDs for feedback and switches to control the channels/delay/delay line input
 
-__Note__: once recording is stopped the recorded samples are transferred from the recording buffers to the playback buffers; the CPU will start sending newly transferred samples to the audio mixer IP Core over DMA immediately(if active).
+__Note__: once recording is stopped the recorded samples are transferred from the recording buffers to the playback buffers, the CPU will start sending newly transferred samples to the audio mixer IP Core over DMA immediately.
 
 ### Buttons and switches table
 
@@ -204,6 +204,8 @@ LED|Behavior|Description
 |__LineIn__ ADC gain|0db|N/A|Audio codec ADC gain value|
 |__MicIn__ ADC gain|-19.5db|N/A|Audio codec ADC gain value|
 |Playback __buffer samples__|sine wave @ 375 HZ|N/A|Used for testing|
+|STDOUT|__Zynq PS__ UART|N/A|N/A|
+|STDIN|__Zynq PS__ UART|N/A|N/A|
 
 # Detailed design
 

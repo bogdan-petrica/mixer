@@ -6,6 +6,8 @@ Target platform is __Zynq 7000__ device series featuring a dual core ARM Cortex-
 
 The target board is [__Zybo Z7-7010__](https://digilent.com/reference/programmable-logic/zybo-z7/start).
 
+To jump to __audio mixer IP Core__ design, follow this [link](./mixer_hw/doc/AudioMixerIP#block-diagram).
+
 For a quick demo you can checkout [software README](./mixer_sw/README.md#introduction) or check the video below:
 
 [![](./doc/video_thumb.png)YouTube video](https://youtu.be/bm6tZgcA20A?si=PH2dcnjw07uSbbLT)

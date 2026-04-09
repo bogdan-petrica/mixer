@@ -164,9 +164,6 @@ begin
             act_err <= '0';
         elsif rising_edge(aclk) then
             if act = '0' then
-                -- todo: add checking for rec_done
-                --assert rec_done = '0' report "invalid rec_done" severity FAILURE;
-                
                 if (wr_en = '1') and (wr_addr = REC_CONFIG_REG) and (wr_data(0) = '1') then
                     act <= '1';
                     

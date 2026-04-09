@@ -71,9 +71,6 @@ architecture behavioral of axi2ctrl is
     signal write_data: std_logic_vector(15 downto 0);
 
 begin
-    -- todo: performance can be improved significantly
-    --      - pass rden directly from arvalid
-    --      - don't use another ff for the output but use the ff inside ctrl and pass read_data directly to rdata
     read: process(aclk, aresetn)
     begin
         if aresetn = '0' then

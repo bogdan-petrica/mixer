@@ -410,7 +410,8 @@ Initial and subsequence transfer:
 2. start the downstream DMA Device to Memory operation by initiating a Simple DMA transfer on the __AXI DMA__ IP core by writing the S2MM_LENGTH register, note that S2MM_LENGTH is in number of bytes, use __REC_SIZE__ * 4 here
 3. wait for __AXI DMA__ to raise the IOC_Irq or Err_Irq
 4. when __AXI DMA__ finishes(or detects an error) it raises the interrupt, the ISR will check the S2MM_DAMSR for IOC_Irq or Err_Irq and report to status to higher level
-5. higher level can finalize the record or initiate a new transfer
+5. invalidate the cache for the recording buffers before notifying the higher level(ensures the higher level sees the recorded samples)
+6. higher level can finalize the record or initiate a new transfer
 
 The tear-down sequence can be called once the __AXI DMA__ finishes its current operation. After the current DMA operation is finished the host CPU simply disables the recording by toggling __REC_EN__ to 0 [REC_CONFIG](#rec_config) register. Performing the tear-down sequence clears the content of the [REC2AXIS](#rec2axis) internal FIFO.
 
@@ -429,11 +430,12 @@ Setup:
 - setup an ISR for the __AXI DMA__ MM2S interrupt
 
 Initial and subsequent transfer:
-1. start the DMA Memory to Device transfer by writing the MM2S_LENGTH register, note that MM2S_LENGTH is in number of bytes, so use number of samples * 4
-2. wait for __AXI DMA__ to raise the IOC_Irq or Err_Irq
-3. when __AXI DMA__ finishes(or detects an error) it raises the interrupt
-4. the ISR checks the MM2S_DAMSR for IOC_Irq or Err_Irq and report to status to higher level
-5. higher level can finalize the playback or initiate a new transfer
+1. flush the cache for the playback buffers(ensures the content reaches the DRAM)
+2. start the DMA Memory to Device transfer by writing the MM2S_LENGTH register, note that MM2S_LENGTH is in number of bytes, so use number of samples * 4
+3. wait for __AXI DMA__ to raise the IOC_Irq or Err_Irq
+4. when __AXI DMA__ finishes(or detects an error) it raises the interrupt
+5. the ISR checks the MM2S_DAMSR for IOC_Irq or Err_Irq and report to status to higher level
+6. higher level can finalize the playback or initiate a new transfer
 
 There is no special tear-down sequence.
 

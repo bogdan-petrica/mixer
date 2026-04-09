@@ -30,6 +30,8 @@ Most of this document is concerned with the __audio mixer IP Core__ and the inte
 
 The document targets technical reviewers and engineers.
 
+To jump to __audio mixer IP Core__ design, follow this [link](./doc/AudioMixerIP.md#block-diagram).
+
 # Target hardware
 
 Target device is [__Zynq 7000__](https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Introduction?tocId=Hf6C7Oo5ABvv2hkWRoiihQ) and the target board is Digilent [Zybo Z7-7010](https://digilent.com/reference/programmable-logic/zybo-z7/start).
@@ -145,7 +147,7 @@ There are two clocks used in the design:
 
 ## Timing Reports
 
-Worst negative slack for the two clocks can be seen below(generated with Vivado's `report_timing_summary` TCL command):
+Setup worst slack for the two clocks can be seen below(generated with Vivado's `report_timing_summary` TCL command):
 
 The AXI CLK(requirement 20ns or __50 MHZ__):
 
@@ -179,21 +181,21 @@ Both clock domains show large positive setup worst slack, which indicate the des
 
 The following is the utilization report( can be obtained with Vivado's `report_utilization -spreadsheet_file "result.xlsx" -name "Utilization"` TCL command)
 
-| Instance | Module | Slice LUTs | Slice Registers | F7 Muxes | Slice | LUT as Logic | LUT as Memory | Block RAM Tile | DSPs | Bonded IOB | Bonded IOPADs | BUFGCTRL | MMCME2_ADV |
-|----------|--------|------------|-----------------|----------|-------|--------------|---------------|----------------|------|------------|---------------|----------|------------|
-| design_1_wrapper | design_1_wrapper | 4898 | 6631 | 24 | 1963 | 4318 | 580 | 19 | 8 | 22 | 130 | 2 | 1 |
-| xlconcat_1 | design_1_xlconcat_1_0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| xlconcat_0 | design_1_xlconcat_0_0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| smartconnect_0 | design_1_smartconnect_0_0 | 2194 | 3066 | 0 | 849 | 1718 | 476 | 0 | 0 | 0 | 0 | 0 | 0 |
-| rst_ps7_0_50M | design_1_rst_ps7_0_50M_0 | 17 | 29 | 0 | 10 | 16 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
-| processing_system7_0 | design_1_processing_system7_0_0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
-| mixer_top_0 | design_1_mixer_top_0_0 | 399 | 489 | 20 | 185 | 397 | 2 | 17 | 8 | 0 | 0 | 0 | 0 |
-| clk_wiz_0 | design_1_clk_wiz_0_0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 |
-| axi_smc | design_1_axi_smc_0 | 643 | 765 | 0 | 294 | 642 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
-| axi_iic_1 | design_1_axi_iic_1_0 | 380 | 363 | 4 | 138 | 370 | 10 | 0 | 0 | 0 | 0 | 0 | 0 |
-| axi_gpio_0 | design_1_axi_gpio_0_0 | 45 | 96 | 0 | 28 | 45 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| axi_dma_0 | design_1_axi_dma_0_0 | 1225 | 1823 | 0 | 522 | 1135 | 90 | 2 | 0 | 0 | 0 | 0 | 0 |
-| adapter_0 | design_1_adapter_0_0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Instance | Slice LUTs | Slice Registers | F7 Muxes | Slice | LUT as Logic | LUT as Memory | Block RAM Tile | DSPs | Bonded IOB | Bonded IOPADs | BUFGCTRL | MMCME2_ADV |
+|----------|------------|-----------------|----------|-------|--------------|---------------|----------------|------|------------|---------------|----------|------------|
+| design_1_wrapper | 4898 | 6631 | 24 | 1963 | 4318 | 580 | 19 | 8 | 22 | 130 | 2 | 1 |
+| xlconcat_1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| xlconcat_0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| smartconnect_0 | 2194 | 3066 | 0 | 849 | 1718 | 476 | 0 | 0 | 0 | 0 | 0 | 0 |
+| rst_ps7_0_50M | 17 | 29 | 0 | 10 | 16 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| processing_system7_0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
+| mixer_top_0 | 399 | 489 | 20 | 185 | 397 | 2 | 17 | 8 | 0 | 0 | 0 | 0 |
+| clk_wiz_0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 |
+| axi_smc | 643 | 765 | 0 | 294 | 642 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| axi_iic_1 | 380 | 363 | 4 | 138 | 370 | 10 | 0 | 0 | 0 | 0 | 0 | 0 |
+| axi_gpio_0 | 45 | 96 | 0 | 28 | 45 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| axi_dma_0 | 1225 | 1823 | 0 | 522 | 1135 | 90 | 2 | 0 | 0 | 0 | 0 | 0 |
+| adapter_0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 Available resources for __XC7010__(see [this](https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/PL-Resources-by-Device-Type)):
 
