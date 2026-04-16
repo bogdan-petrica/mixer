@@ -8,7 +8,7 @@ Testing focuses on **verifying behavior**, not achieving arbitrary coverage metr
 2. **Trust structural integrity** - audio mixer IP core top level is simple wiring, no simulation needed, the synthesis tool provides required level of validation
 3. **Design for testability** – The audio mixer IP core is split into independent IP sub-blocks that are well defined, contained, and can be tested and validated independently. Examples:
    - [AXI2CTRL & CTRL](./AudioMixerIP.md#axi2ctrl--ctrl)
-   - [CORE & DELAY LINE](./AudioMixerIP.md#core--delay_line--delay_mux)
+   - [CORE](./AudioMixerIP.md#core) & [DELAY LINE](./AudioMixerIP.md#delay_line--delay_mux)
 
 ## Why This Approach
 
