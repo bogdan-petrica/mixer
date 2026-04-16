@@ -28,6 +28,7 @@
 - [Further improvements](#further-improvements)
   - [Use sync reset](#use-sync-reset)
   - [Inconsistent audio sample format](#inconsistent-audio-sample-format)
+- [Testing](#testing)
 
 # Introduction
 
@@ -463,3 +464,7 @@ type AUDIO_SAMPLE is record
   right : std_logic_vector(15 downto 0);
 end record;
 ```
+
+# Testing
+
+For information on how audio mixer IP core was tested see [TESTING](./TESTING.md).
